@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fc-api-deployment
+  labels:
+    app: fc-api
+  namespace: tarroja
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fc-api
+  template:
+    metadata:
+      labels:
+        app: fc-api
+    spec:
+      containers:
+      - name: fc-api
+        image: juanitotrrj/fc-api:latest
+        ports:
+        - containerPort: 80

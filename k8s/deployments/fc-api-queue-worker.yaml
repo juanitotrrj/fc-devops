@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fc-api-queue-worker-deployment
+  labels:
+    app: fc-api-queue-worker
+  namespace: tarroja
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fc-api-queue-worker
+  template:
+    metadata:
+      labels:
+        app: fc-api-queue-worker
+    spec:
+      containers:
+      - name: fc-api-queue-worker
+        image: juanitotrrj/fc-api:latest
+        command: ["supervisord"]
+        args: ["-c /app/docker/queue-worker.conf"]

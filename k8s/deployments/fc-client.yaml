@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fc-client-deployment
+  labels:
+    app: fc-client
+  namespace: tarroja
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fc-client
+  template:
+    metadata:
+      labels:
+        app: fc-client
+    spec:
+      containers:
+      - name: fc-client
+        image: juanitotrrj/fc-client:latest
+        command: ["npm"]
+        args: ["start"]
+        ports:
+        - containerPort: 3000
