@@ -1,0 +1,30 @@
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+  name: nginx-ingress-default-tarroja
+  namespace: tarroja
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/cors-allow-credentials: 'true'
+    nginx.ingress.kubernetes.io/cors-allow-headers: >-
+      DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization,Access-Control-Allow-Origin,X-Authz-Entities,X-Authz-Company-Id
+    nginx.ingress.kubernetes.io/cors-allow-methods: '*'
+    nginx.ingress.kubernetes.io/cors-allow-origin: 'https://app.tarroja.test'
+    nginx.ingress.kubernetes.io/enable-cors: 'true'
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+spec:
+  rules:
+    - host: app.tarroja.test
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: fc-client
+              servicePort: 80
+    - host: fc-api.tarroja.test
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: gw-api
+              servicePort: 80

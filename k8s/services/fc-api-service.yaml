@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: fc-api
+  namespace: tarroja
+  labels:
+    app: fc-api
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
+  selector:
+    app: fc-api
+  type: ClusterIP
+  sessionAffinity: None
+status:
+  loadBalancer: {}
