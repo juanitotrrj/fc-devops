@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fc-api-deployment
+  name: fc-api
   labels:
     app: fc-api
   namespace: tarroja

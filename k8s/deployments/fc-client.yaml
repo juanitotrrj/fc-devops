@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fc-client-deployment
+  name: fc-client
   labels:
     app: fc-client
   namespace: tarroja
@@ -23,11 +23,6 @@ spec:
       labels:
         app: fc-client
     spec:
-      volumes:
-        - name: fc-client-env
-          secret:
-            secretName: fc-client-env
-            defaultMode: 420
       containers:
       - name: fc-client
         image: juanitotrrj/fc-client:latest
@@ -53,7 +48,3 @@ spec:
           requests:
             cpu: 5m
             memory: 100Mi
-        volumeMounts:
-          - name: fc-client-env
-            mountPath: /app/.env
-            subPath: .env

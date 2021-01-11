@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fc-api-queue-worker-deployment
+  name: fc-api-queue-worker
   labels:
     app: fc-api-queue-worker
   namespace: tarroja

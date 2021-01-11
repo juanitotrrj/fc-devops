@@ -8,6 +8,8 @@ RUN git clone https://github.com/juanitotrrj/fc-client.git app
 
 WORKDIR /app
 
+COPY fc-client.env /app/.env
+
 RUN npm install --dev
 
 RUN npm run-script build

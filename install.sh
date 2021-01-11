@@ -25,8 +25,8 @@ kubectl apply -f k8s/deployments/fc-api-queue-worker.yaml
 kubectl apply -f k8s/hpa/fc-api-hpa.yaml
 kubectl apply -f k8s/hpa/fc-client-hpa.yaml
 
-kubectl apply -f k8s/ingress/mysql-ingress.yaml
-kubectl apply -f k8s/ingress/nginx-ingress-default-tarroja.yaml
+# kubectl apply -f k8s/ingress/mysql-ingress.yaml
+# kubectl apply -f k8s/ingress/nginx-ingress-default-tarroja.yaml
 
 kubectl apply -f k8s/services/redis-service.yaml
 kubectl apply -f k8s/services/fc-api-service.yaml
@@ -34,4 +34,4 @@ kubectl apply -f k8s/services/fc-client-service.yaml
 
 kubectl apply -f k8s/jobs/fc-api-migrate.yaml
 
-# minikube service fc-client -n tarroja
+minikube service fc-client -n tarroja
