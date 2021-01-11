@@ -27,30 +27,27 @@ spec:
         app: mysql
     spec:
       containers:
-      - image: juanitotrrj/mysql:latest
+      - image: juanitotrrj/mariadb:10.5
         imagePullPolicy: Always
         name: mysql
         env:
-        - name: MYSQL_ROOT_PASSWORD
+        - name: MARIADB_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
               name: database-secret
-              key: mysql_root_password
-        - name: MYSQL_DATABASE
+              key: mariadb_root_password
+        - name: MARIADB_DATABASE
+          value: tarroja_lifetrack
+        - name: MARIADB_USER
           valueFrom:
             secretKeyRef:
               name: database-secret
-              key: mysql_database
-        - name: MYSQL_USER
+              key: mariadb_user
+        - name: MARIADB_PASSWORD
           valueFrom:
             secretKeyRef:
               name: database-secret
-              key: mysql_user
-        - name: MYSQL_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: database-secret
-              key: mysql_password
+              key: mariadb_password
         ports:
         - containerPort: 3306
           name: mysql
