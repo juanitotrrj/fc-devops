@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: "2021-01-05T06:58:54Z"
+  labels:
+    app: fc-api
+  name: fc-api-migrate
+  namespace: tarroja
+spec:
+  backoffLimit: 6
+  completions: 1
+  parallelism: 1
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        job-name: fc-api-migrate
+    spec:
+      containers:
+      - command:
+        - php
+        - artisan
+        - migrate
+        image: juanitotrrj/fc-api:latest
+        imagePullPolicy: IfNotPresent
+        name: fc-api
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /app/.env
+          name: fc-api-env
+          subPath: .env
+      dnsPolicy: ClusterFirst
+      imagePullSecrets:
+      - name: regcred
+      restartPolicy: Never
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: fc-api-env
+        secret:
+          defaultMode: 420
+          secretName: fc-api-env

@@ -9,7 +9,7 @@ metadata:
     nginx.ingress.kubernetes.io/cors-allow-headers: >-
       DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization,Access-Control-Allow-Origin,X-Authz-Entities,X-Authz-Company-Id
     nginx.ingress.kubernetes.io/cors-allow-methods: '*'
-    nginx.ingress.kubernetes.io/cors-allow-origin: 'https://app.tarroja.test'
+    nginx.ingress.kubernetes.io/cors-allow-origin: 'https://fc-api.tarroja.test'
     nginx.ingress.kubernetes.io/enable-cors: 'true'
     nginx.ingress.kubernetes.io/use-regex: 'true'
 spec:

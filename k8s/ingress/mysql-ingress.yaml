@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/server-alias: db.tarroja.test
+  labels:
+    app: mysql
+  name: mysql-ingress
+  namespace: tarroja
+
+spec:
+  rules:
+  - host: db.tarroja.test
+    http:
+      paths:
+        - path: /
+          backend:
+            serviceName: mysql
+            servicePort: 3306

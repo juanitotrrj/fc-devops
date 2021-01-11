@@ -10,15 +10,50 @@ spec:
   selector:
     matchLabels:
       app: fc-client
+  selector:
+    matchLabels:
+      app: fc-client
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
   template:
     metadata:
       labels:
         app: fc-client
     spec:
+      volumes:
+        - name: fc-client-env
+          secret:
+            secretName: fc-client-env
+            defaultMode: 420
       containers:
       - name: fc-client
         image: juanitotrrj/fc-client:latest
-        command: ["npm"]
-        args: ["start"]
+        imagePullPolicy: Always
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
         ports:
-        - containerPort: 3000
+        - containerPort: 80
+          name: http
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 200m
+            memory: 300Mi
+          requests:
+            cpu: 5m
+            memory: 100Mi
+        volumeMounts:
+          - name: fc-client-env
+            mountPath: /app/.env
+            subPath: .env

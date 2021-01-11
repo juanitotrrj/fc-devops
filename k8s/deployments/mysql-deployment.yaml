@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql
+  namespace: tarroja
 spec:
   ports:
   - port: 3306
@@ -13,6 +14,7 @@ apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
   name: mysql
+  namespace: tarroja
 spec:
   selector:
     matchLabels:
@@ -25,7 +27,8 @@ spec:
         app: mysql
     spec:
       containers:
-      - image: mysql:8.0
+      - image: juanitotrrj/mysql:latest
+        imagePullPolicy: Always
         name: mysql
         env:
         - name: MYSQL_ROOT_PASSWORD
@@ -33,6 +36,21 @@ spec:
             secretKeyRef:
               name: database-secret
               key: mysql_root_password
+        - name: MYSQL_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: database-secret
+              key: mysql_database
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: database-secret
+              key: mysql_user
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database-secret
+              key: mysql_password
         ports:
         - containerPort: 3306
           name: mysql

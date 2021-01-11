@@ -4,6 +4,7 @@ metadata:
   name: mysql-pv-volume
   labels:
     type: local
+  namespace: tarroja
 spec:
   storageClassName: manual
   capacity:
@@ -11,12 +12,13 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/mnt/data"
+    path: "/mnt/tarroja-data-2"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-pv-claim
+  namespace: tarroja
 spec:
   storageClassName: manual
   accessModes:
