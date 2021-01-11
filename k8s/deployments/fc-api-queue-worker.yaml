@@ -15,8 +15,34 @@ spec:
       labels:
         app: fc-api-queue-worker
     spec:
+      volumes:
+        - name: fc-api-env
+          secret:
+            secretName: fc-api-env
+            defaultMode: 420
       containers:
       - name: fc-api-queue-worker
         image: juanitotrrj/fc-api:latest
-        command: ["supervisord"]
-        args: ["-c /app/docker/queue-worker.conf"]
+        command:
+          - supervisord
+        args:
+          - -c
+          - docker/queue-worker.conf
+        resources:
+          limits:
+            cpu: 400m
+            memory: 512Mi
+          requests:
+            cpu: 20m
+            memory: 180Mi
+        volumeMounts:
+          - name: fc-api-env
+            mountPath: /app/.env
+            subPath: .env
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
