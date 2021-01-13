@@ -26,5 +26,5 @@
 
 ## Viewing fc-api API Explorer
 ```bash
-minikube service fc-client -n tarroja
+minikube service fc-api -n tarroja
 ```
