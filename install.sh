@@ -32,6 +32,18 @@ kubectl apply -f k8s/services/redis-service.yaml
 kubectl apply -f k8s/services/fc-api-service.yaml
 kubectl apply -f k8s/services/fc-client-service.yaml
 
-kubectl apply -f k8s/jobs/fc-api-migrate.yaml
+while [ true ]
+do
+    if kubectl rollout status deployment/mysql && \
+        kubectl rollout status deployment/fc-api && \
+        kubectl rollout status deployment/fc-client && \
+        kubectl rollout status deployment/redis-master && \
+        kubectl rollout status deployment/fc-api-queue-worker; then
+        kubectl apply -f k8s/jobs/fc-api-migrate.yaml
+        break
+    fi
+done
 
-minikube service fc-client -n tarroja
+if kubectl wait --for=condition=complete job/fc-api-migrate; then
+    minikube service fc-client -n tarroja
+fi
